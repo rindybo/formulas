@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Binance.Net;
 using Binance.Net.Clients;
 using Binance.Net.Enums;
 using Binance.Net.Objects;
@@ -17,14 +16,14 @@ public sealed class BinanceMarketDataService : IBinanceMarketDataService
 {
     private readonly BinanceConfig _config;
     private readonly ILogger<BinanceMarketDataService> _logger;
-    private readonly BinanceClient _client;
+    private readonly BinanceRestClient _client;
 
     public BinanceMarketDataService(AppConfig appConfig, ILogger<BinanceMarketDataService> logger)
     {
         _config = appConfig.Binance;
         _logger = logger;
 
-        BinanceClientOptions options = new();
+        BinanceRestClientOptions options = new();
         if (!string.IsNullOrWhiteSpace(_config.ApiKey) && !string.IsNullOrWhiteSpace(_config.ApiSecret))
         {
             options.ApiCredentials = new ApiCredentials(_config.ApiKey, _config.ApiSecret);
@@ -38,7 +37,7 @@ public sealed class BinanceMarketDataService : IBinanceMarketDataService
             };
         }
 
-        _client = new BinanceClient(options);
+        _client = new BinanceRestClient(options);
     }
 
     public async Task<IReadOnlyList<KlineData>> GetHistoricalKlinesAsync(CancellationToken cancellationToken = default)
