@@ -8,6 +8,8 @@ using Binance.Net.Objects;
 using BinanceSimulator.Configuration;
 using BinanceSimulator.Models;
 using Microsoft.Extensions.Logging;
+using CryptoExchange.Net.Authentication;
+
 
 namespace BinanceSimulator.Services;
 
